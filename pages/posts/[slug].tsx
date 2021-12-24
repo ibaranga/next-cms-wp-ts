@@ -7,24 +7,23 @@ import Header from "../../components/header";
 import PostHeader from "../../components/post-header";
 import SectionSeparator from "../../components/section-separator";
 import Layout from "../../components/layout";
-import { getAllPostsWithSlug, getGeneralSettings, getPostAndMorePosts } from "../../lib/api";
+import { getGeneralSettings, getPostAndMorePosts } from "../../lib/api";
 import PostTitle from "../../components/post-title";
 import Head from "next/head";
 import Tags from "../../components/tags";
-import { GetStaticPaths, GetStaticProps } from "next";
+import { GetServerSideProps } from "next";
 import {
+  ApiEdgesNodes,
   ApiGeneralSettings,
-  ApiNodeEdges,
   ApiPost,
   ApiPostDetails,
-  ApiPostSlug,
   ApiPreviewPost,
 } from "../../lib/api-types";
 import { ParsedUrlQuery } from "querystring";
 
 export interface PostProps {
   post: ApiPostDetails;
-  posts: ApiNodeEdges<ApiPost>;
+  posts: ApiEdgesNodes<ApiPost>;
   preview: boolean;
   generalSettings: ApiGeneralSettings;
 }
@@ -43,8 +42,8 @@ export default function Post({ post, posts, preview, generalSettings }: PostProp
 
   return (
     <Layout preview={preview}>
+      <Header generalSettings={generalSettings} post={post} />
       <Container>
-        <Header />
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>
         ) : (
@@ -74,11 +73,11 @@ export default function Post({ post, posts, preview, generalSettings }: PostProp
   );
 }
 
-export const getStaticProps: GetStaticProps<PostProps, ParsedUrlQuery, PostPreviewData> = async ({
-  params,
-  preview = false,
-  previewData,
-}) => {
+export const getServerSideProps: GetServerSideProps<
+  PostProps,
+  ParsedUrlQuery,
+  PostPreviewData
+> = async ({ params, preview = false, previewData }) => {
   const { post, posts } = await getPostAndMorePosts(params.slug, preview, previewData);
   const generalSettings = await getGeneralSettings();
   return {
@@ -88,14 +87,5 @@ export const getStaticProps: GetStaticProps<PostProps, ParsedUrlQuery, PostPrevi
       posts,
       generalSettings,
     },
-  };
-};
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  const allPosts: ApiNodeEdges<ApiPostSlug> = await getAllPostsWithSlug();
-
-  return {
-    paths: (allPosts.edges || []).map(({ node }) => `/posts/${node.slug}`),
-    fallback: true,
   };
 };

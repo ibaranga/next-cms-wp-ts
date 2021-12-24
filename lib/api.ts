@@ -1,10 +1,9 @@
 import {
+  ApiEdgesNodes,
   ApiGeneralSettings,
   ApiNode,
-  ApiNodeEdges,
   ApiPost,
   ApiPostDetails,
-  ApiPostSlug,
   ApiPostSummary,
   ApiPreviewPost,
 } from "./api-types";
@@ -66,21 +65,6 @@ export async function getPreviewPost(id, idType = "DATABASE_ID"): Promise<ApiPre
   return data.post;
 }
 
-export async function getAllPostsWithSlug(): Promise<ApiNodeEdges<ApiPostSlug>> {
-  const data = await fetchAPI(`
-    {
-      posts(first: 10000) {
-        edges {
-          node {
-            slug
-          }
-        }
-      }
-    }
-  `);
-  return data?.posts;
-}
-
 export async function getAllPostsForHome(preview): Promise<ApiNode<ApiPostSummary>[]> {
   const data = await fetchAPI(
     `
@@ -95,6 +79,7 @@ export async function getAllPostsForHome(preview): Promise<ApiNode<ApiPostSummar
             featuredImage {
               node {
                 sourceUrl
+                caption
               }
             }
             author {
@@ -127,7 +112,7 @@ export async function getPostAndMorePosts(
   slug: string | string[],
   preview: boolean,
   previewData: { post: ApiPreviewPost }
-): Promise<{ post: ApiPostDetails; posts: ApiNodeEdges<ApiPost> }> {
+): Promise<{ post: ApiPostDetails; posts: ApiEdgesNodes<ApiPost> }> {
   const postPreview = preview && previewData?.post;
   // The slug may be the id of an unpublished post
   const isId = Number.isInteger(Number(slug));
@@ -152,6 +137,7 @@ export async function getPostAndMorePosts(
       featuredImage {
         node {
           sourceUrl
+          caption
         }
       }
       author {

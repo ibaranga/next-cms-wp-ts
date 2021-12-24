@@ -10,17 +10,23 @@ export interface CoverImageProps {
 }
 
 export default function CoverImage({ title, coverImage, slug }: CoverImageProps) {
-  const image = (
-    <Image
-      width={2000}
-      height={1000}
-      alt={`Cover Image for ${title}`}
-      src={coverImage?.sourceUrl}
-      className={cn("shadow-small", {
-        "hover:shadow-medium transition-shadow duration-200": slug,
-      })}
-    />
-  );
+  const image = coverImage?.sourceUrl ? (
+    <>
+      <Image
+        width={2000}
+        height={1000}
+        alt={`Cover Image for ${title}`}
+        src={coverImage?.sourceUrl}
+        className={cn("shadow-small", {
+          "hover:shadow-medium transition-shadow duration-200": slug,
+        })}
+      />
+      <div
+        className="wp-thumbnail-caption"
+        dangerouslySetInnerHTML={{ __html: coverImage?.caption }}
+      />
+    </>
+  ) : null;
   return (
     <div className="sm:mx-0">
       {slug ? (

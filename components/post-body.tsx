@@ -6,11 +6,8 @@ export interface PostBodyProps {
 
 export default function PostBody({ content }: PostBodyProps) {
   return (
-    <div className="max-w-2xl mx-auto">
-      <div
-        className={styles.content}
-        dangerouslySetInnerHTML={{ __html: content }}
-      />
+    <div className="max-w-3xl mx-auto">
+      <div className={styles.content} dangerouslySetInnerHTML={{ __html: content }} />
     </div>
   );
 }

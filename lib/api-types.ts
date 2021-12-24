@@ -6,7 +6,7 @@ export interface ApiEdges<T> {
   edges: T[];
 }
 
-export interface ApiNodeEdges<T> extends ApiEdges<ApiNode<T>> {}
+export interface ApiEdgesNodes<T> extends ApiEdges<ApiNode<T>> {}
 
 export interface ApiGeneralSettings {
   description: string;
@@ -22,6 +22,7 @@ export interface ApiPreviewPost {
 
 export interface ApiImage {
   sourceUrl: string;
+  caption: string;
 }
 
 export interface ApiAvatar {
@@ -35,10 +36,6 @@ export interface ApiAuthor {
   avatar: ApiAvatar;
 }
 
-export interface ApiPostSlug {
-  slug: string;
-}
-
 export interface ApiPostSummary {
   title: string;
   excerpt: string;
@@ -49,8 +46,8 @@ export interface ApiPostSummary {
 }
 
 export interface ApiPost extends ApiPostSummary {
-  categories: ApiNodeEdges<ApiCategory>;
-  tags: ApiNodeEdges<ApiTag>;
+  categories: ApiEdgesNodes<ApiCategory>;
+  tags: ApiEdgesNodes<ApiTag>;
 }
 
 export interface ApiPostDetails extends ApiPost {

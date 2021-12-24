@@ -108,3 +108,23 @@
 .wp-block-media-text {
     @apply grid grid-cols-2 gap-4;
 }
+
+.wp-block-table {
+    @apply max-w-3xl;
+    @apply mx-auto;
+}
+
+.wp-block-table tr td {
+    padding: 0.5em 1.5em;
+}
+
+.wp-block-table tr:nth-child(even) {
+    background: #CCC
+}
+
+
+.wp-thumbnail-caption {
+    font-size: 13px;
+    margin-top: 0.5em;
+    text-align: center;
+}
