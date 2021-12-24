@@ -1,0 +1,26 @@
+{
+  "private": true,
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "classnames": "2.3.1",
+    "date-fns": "2.22.1",
+    "next": "latest",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.38",
+    "autoprefixer": "10.2.6",
+    "postcss": "8.3.5",
+    "prettier": "^2.5.1",
+    "tailwindcss": "^2.2.4",
+    "typescript": "^4.5.4"
+  },
+  "prettier": {
+    "printWidth": 100
+  }
+}
