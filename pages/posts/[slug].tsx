@@ -42,7 +42,7 @@ export default function Post({ post, posts, preview, generalSettings }: PostProp
 
   return (
     <Layout preview={preview}>
-      <Header generalSettings={generalSettings} post={post} />
+      <Header generalSettings={generalSettings} title={post.title} />
       <Container>
         {router.isFallback ? (
           <PostTitle>Loading…</PostTitle>

@@ -36,6 +36,14 @@ export interface ApiAuthor {
   avatar: ApiAvatar;
 }
 
+export interface ApiBlogPage {
+  name: string;
+  slug: string;
+  title: string;
+  content: string;
+  featuredImage: ApiNode<ApiImage>;
+}
+
 export interface ApiPostSummary {
   title: string;
   excerpt: string;

@@ -2,6 +2,7 @@ import {
   ApiEdgesNodes,
   ApiGeneralSettings,
   ApiNode,
+  ApiBlogPage,
   ApiPost,
   ApiPostDetails,
   ApiPostSummary,
@@ -45,6 +46,25 @@ export async function getGeneralSettings(): Promise<ApiGeneralSettings> {
      }`);
 
   return data?.generalSettings;
+}
+
+export async function getBlogPages(nameIn: string[]): Promise<ApiBlogPage[]> {
+  const data = await fetchAPI(
+    `query QueryPagesByName($nameIn: [String]) {
+      pages(where: {nameIn: $nameIn}) {
+        nodes {
+          slug
+          content
+        }
+      }
+    }
+    `,
+    {
+      variables: { nameIn },
+    }
+  );
+
+  return data.pages.nodes;
 }
 
 export async function getPreviewPost(id, idType = "DATABASE_ID"): Promise<ApiPreviewPost> {

@@ -1,12 +1,12 @@
 import Link from "next/link";
-import { ApiGeneralSettings, ApiPostDetails } from "../lib/api-types";
+import { ApiGeneralSettings } from "../lib/api-types";
 
 export interface HeaderProps {
   generalSettings: ApiGeneralSettings;
-  post?: ApiPostDetails;
+  title?: string;
 }
 
-export default function Header({ generalSettings, post }: HeaderProps) {
+export default function Header({ generalSettings, title }: HeaderProps) {
   return (
     <div className="sticky shadow-xs max-w-full px-5 md:px-3 py-3 md:py-1 top-0 z-10  md:text-4xl flex flex-row bg-accent-1 dark:bg-gray-700 justify-between">
       <div className="flex flex-col text-2xl justify-around">
@@ -20,7 +20,7 @@ export default function Header({ generalSettings, post }: HeaderProps) {
         </span>
       </div>
       <div className="flex flex-col justify-around">
-        {post && <span className="text-lg mx-3">{post.title}</span>}
+        {title && <span className="text-lg mx-3">{title}</span>}
       </div>
     </div>
   );
